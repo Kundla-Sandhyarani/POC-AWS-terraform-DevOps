@@ -45,10 +45,10 @@ sudo usermod -aG docker ec2-user
 
 
 # Create a simple Java web app
-mkdir -p ~/java-webapp/src/main/webapp
-mkdir -p ~/java-webapp/WEB-INF
+mkdir -p /root/java-webapp/src/main/webapp
+mkdir -p /root/java-webapp/WEB-INF
 
-cat > ~/java-webapp/src/main/webapp/index.jsp <<EOF
+cat > /root/java-webapp/src/main/webapp/index.jsp <<EOF
 <html>
   <body>
     <h1>Hello from Dockerized WAR!</h1>
@@ -56,19 +56,19 @@ cat > ~/java-webapp/src/main/webapp/index.jsp <<EOF
 </html>
 EOF
 
-cat > ~/java-webapp/WEB-INF/web.xml <<EOF
+cat > /root/java-webapp/WEB-INF/web.xml <<EOF
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
   <display-name>SampleApp</display-name>
 </web-app>
 EOF
 
 # Package WAR file
-cd ~/java-webapp
+cd /root/java-webapp
 mkdir -p target
 jar -cvf target/sample.war -C src/main/webapp/ . -C WEB-INF/ . 
 
 # Create Dockerfile to deploy WAR in Tomcat
-cat > Dockerfile <<EOF
+cat > /root/java-webapp/Dockerfile <<EOF
 FROM tomcat:9.0
 COPY target/sample.war /usr/local/tomcat/webapps/sample.war
 EOF
