@@ -37,6 +37,13 @@ echo "<html><body><h1>Tomcat is running!</h1></body></html>" | sudo tee /opt/tom
 # Start Tomcat
 sudo /opt/tomcat/bin/startup.sh
 
+# Install Docker
+sudo dnf install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ec2-user
+newgrp docker
+
 
 
 # Create a simple Java web app
@@ -60,14 +67,7 @@ EOF
 # Package WAR file
 cd ~/java-webapp
 mkdir -p target
-jar -cvf target/sample.war -C src/main/webapp/ . -C WEB-INF/ .
-
-# Install Docker
-sudo dnf install docker -y
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo usermod -aG docker ec2-user
-newgrp docker 
+jar -cvf target/sample.war -C src/main/webapp/ . -C WEB-INF/ . 
 
 # Create Dockerfile to deploy WAR in Tomcat
 cat > Dockerfile <<EOF
