@@ -1,37 +1,44 @@
 #!/bin/bash
 # Update system
-sudo yum update -y
+sudo dnf update -y
 
 # Install Java (Amazon Linux Extras)
-sudo amazon-linux-extras enable java-openjdk11
-sudo yum install java-11-openjdk -y
+sudo dnf install java-11-amazon-corretto -y
 
 # Install Maven
-sudo yum install maven -y
+sudo dnf install maven -y
 
 # Install Jenkins
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo wget -O /etc/dnf.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-sudo yum install jenkins -y
+sudo dnf install jenkins -y
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 
 # Install Docker
-sudo yum install docker -y
+sudo dnf install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 
-# Install Tomcat using Amazon Linux Extras
-sudo amazon-linux-extras enable tomcat8.5
-sudo yum install tomcat -y
+# Create Tomcat directory
+sudo mkdir -p /opt/tomcat
+
+# Download and extract Tomcat
+TOMCAT_VERSION=9.0.80
+cd /tmp
+sudo curl -O https://downloads.apache.org/tomcat/tomcat-9/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz
+sudo tar xzvf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt/tomcat --strip-components=1
+
+# Make scripts executable
+sudo chmod +x /opt/tomcat/bin/*.sh
 
 # Change Tomcat port from 8080 to 9090
-sudo sed -i 's/port="8080"/port="9090"/' /usr/share/tomcat/conf/server.xml
+sudo sed -i 's/port="8080"/port="9090"/' /opt/tomcat/conf/server.xml
 
-# Start and enable Tomcat
-sudo systemctl start tomcat
-sudo systemctl enable tomcat
+# Start Tomcat
+sudo /opt/tomcat/bin/startup.sh
+
 
 
 # Create a simple Java web app
