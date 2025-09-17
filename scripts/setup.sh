@@ -22,15 +22,25 @@ sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 
-# Install Tomcat
-sudo mkdir /opt/tomcat
-cd /opt/tomcat
-sudo wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz
-sudo tar xzvf apache-tomcat-9.0.80.tar.gz --strip-components=1
+# Define Tomcat version
+TOMCAT_VERSION=9.0.80
+
+# Create Tomcat directory
+sudo mkdir -p /opt/tomcat
+
+# Download and extract Tomcat
+sudo wget https://downloads.apache.org/tomcat/tomcat-9/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz -P /tmp
+sudo tar xzvf /tmp/apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt/tomcat --strip-components=1
+
+# Make startup/shutdown scripts executable
 sudo chmod +x /opt/tomcat/bin/*.sh
+
+# Change Tomcat port from 8080 to 9090
 sudo sed -i 's/port="8080"/port="9090"/' /opt/tomcat/conf/server.xml
-sudo /opt/tomcat/bin/shutdown.sh
+
+# Start Tomcat
 sudo /opt/tomcat/bin/startup.sh
+
 
 # Create a simple Java web app
 mkdir -p ~/java-webapp/src/main/webapp
