@@ -29,6 +29,7 @@ sudo wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat
 sudo tar xzvf apache-tomcat-9.0.80.tar.gz --strip-components=1
 sudo chmod +x /opt/tomcat/bin/*.sh
 sudo sed -i 's/port="8080"/port="9090"/' /opt/tomcat/conf/server.xml
+sudo /opt/tomcat/bin/shutdown.sh
 sudo /opt/tomcat/bin/startup.sh
 
 # Create a simple Java web app
