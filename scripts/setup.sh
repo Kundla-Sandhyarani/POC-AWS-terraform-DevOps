@@ -24,17 +24,21 @@ sudo usermod -aG docker ec2-user
 # Create Tomcat directory
 sudo mkdir -p /opt/tomcat
 
-# Download and extract Tomcat
-TOMCAT_VERSION=9.0.80
+# Download Tomcat from verified mirror
 cd /tmp
-sudo curl -O https://downloads.apache.org/tomcat/tomcat-9/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz
-sudo tar xzvf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt/tomcat --strip-components=1
+curl -LO https://apache.root.lu/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz
 
-# Make scripts executable
+# Extract Tomcat
+sudo tar xzvf apache-tomcat-9.0.80.tar.gz -C /opt/tomcat --strip-components=1
+
+# Make Tomcat scripts executable
 sudo chmod +x /opt/tomcat/bin/*.sh
 
 # Change Tomcat port from 8080 to 9090
 sudo sed -i 's/port="8080"/port="9090"/' /opt/tomcat/conf/server.xml
+
+# Create a test page to verify it's working
+echo "<html><body><h1>Tomcat is running!</h1></body></html>" | sudo tee /opt/tomcat/webapps/ROOT/index.html
 
 # Start Tomcat
 sudo /opt/tomcat/bin/startup.sh
