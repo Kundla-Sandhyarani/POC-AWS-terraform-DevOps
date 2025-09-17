@@ -67,6 +67,7 @@ sudo dnf install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
+newgrp docker 
 
 # Create Dockerfile to deploy WAR in Tomcat
 cat > Dockerfile <<EOF
