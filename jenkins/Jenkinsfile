@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh 'scp target/java-app.war ubuntu@<tomcat-ip>:/opt/tomcat/webapps/'
+        sh 'scp -i /path/to/your-key.pem target/java-app.war ec2-user@<ec2-public-ip>:/opt/tomcat/webapps/'
       }
     }
   }
