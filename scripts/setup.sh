@@ -15,12 +15,6 @@ sudo dnf install jenkins -y
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 
-# Install Docker
-sudo dnf install docker -y
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo usermod -aG docker ec2-user
-
 # Create Tomcat directory
 sudo mkdir -p /opt/tomcat
 
@@ -67,6 +61,12 @@ EOF
 cd ~/java-webapp
 mkdir -p target
 jar -cvf target/sample.war -C src/main/webapp/ . -C WEB-INF/ .
+
+# Install Docker
+sudo dnf install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ec2-user
 
 # Create Dockerfile to deploy WAR in Tomcat
 cat > Dockerfile <<EOF
