@@ -16,6 +16,12 @@ sudo yum install jenkins -y
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 
+# Install Docker
+sudo yum install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ec2-user
+
 # Install Tomcat
 sudo mkdir /opt/tomcat
 cd /opt/tomcat
