@@ -42,8 +42,6 @@ sudo dnf install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
-newgrp docker
-
 
 
 # Create a simple Java web app
@@ -76,7 +74,7 @@ COPY target/sample.war /usr/local/tomcat/webapps/sample.war
 EOF
 
 # Build Docker image
-docker build -t sample-java-app .
+sudo docker build -t sample-java-app .
 
 # Run Docker container
-docker run -d --name sample-app -p 8081:8080 sample-java-app
+sudo docker run -d --name sample-app -p 8081:8080 sample-java-app
