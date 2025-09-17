@@ -1,0 +1,15 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean package'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'scp target/java-app.war ubuntu@<tomcat-ip>:/opt/tomcat/webapps/'
+      }
+    }
+  }
+}
