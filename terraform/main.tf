@@ -1,10 +1,10 @@
 provider "aws" {
-  region = "ap-south-1"
+  region = "ap-southeast-2"
 }
 
 resource "aws_instance" "devops_server" {
-  ami           = "ami-0f5ee92e2d63afc18" # Ubuntu 22.04
-  instance_type = "t2.micro"
+  ami           = "ami-0059ed5a3aacdfe15" # LINUX AMI
+  instance_type = "t3.micro"
   key_name      = var.key_name
 
   user_data = file("${path.module}/../scripts/setup.sh")
