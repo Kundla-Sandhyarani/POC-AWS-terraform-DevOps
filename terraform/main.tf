@@ -17,7 +17,7 @@ resource "aws_instance" "devops_server" {
 }
 
 resource "aws_security_group" "devops_sg" {
-  name        = "devops_sg"
+  name        = "devops_sg_"
   description = "Allow SSH, Jenkins, Tomcat (Docker)"
 
   ingress {
