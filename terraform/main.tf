@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_instance" "devops_server" {
   ami           = "ami-0059ed5a3aacdfe15" # Amazon Linux AMI
   instance_type = "t2.micro"
-  key_name      = "sandhya-key"
+  key_name      = "var.key_name"
 
   user_data = file("${path.module}/../scripts/setup.sh")
 
