@@ -1,1 +1,1 @@
-sandhya-key
+key_name = "sandhya-key"
