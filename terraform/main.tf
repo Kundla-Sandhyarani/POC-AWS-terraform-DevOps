@@ -10,7 +10,7 @@ resource "aws_instance" "devops_server" {
   user_data = file("${path.module}/../scripts/setup.sh")
 
   tags = {
-    Name = "DevOpsPOC"
+    Name = "DevopsPOC"
   }
 
   vpc_security_group_ids = [aws_security_group.devops_sg.id]
